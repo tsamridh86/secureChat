@@ -1,4 +1,4 @@
-import socket,sys
+import socket,sys , pickle
 import keyConfigs
 
 def intialise( port ):
@@ -19,9 +19,9 @@ def run( port ):
     print ('Connected to ',addr)
     # begin key exchange
     privateKey, computedKey = keyConfigs.generateKey()
-    c.send(computedKey)
+    c.send(pickle.dumps(computedKey))
     data = c.recv(512)
-    recievedKey = int.from_bytes(data,byteorder="big")
+    recievedKey = pickle.loads(data)
     finalKey = keyConfigs.computeKey(privateKey, recievedKey)
     c.send(b"Ack")
     print ("The generated key : " , finalKey)

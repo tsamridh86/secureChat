@@ -3,8 +3,16 @@ generator = 2
 divisor = 67
 
 def generateKey():
-	num = randrange(1,100)
-	return num , pow(generator,num,divisor).to_bytes(1,byteorder="big")
+	privateKey = []
+	transferKey = [] 
+	for i in range(0,10):
+		num = randrange(10,100)
+		privateKey.append(num)
+		transferKey.append(pow(generator,num,divisor))
+	return privateKey, transferKey
 
 def computeKey(privateKey, recievedKey):
-	return pow(recievedKey,privateKey,divisor)
+	finalKey = []
+	for i in range(len(privateKey)):
+		finalKey.append(pow(recievedKey[i],privateKey[i],divisor))
+	return finalKey

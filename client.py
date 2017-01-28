@@ -1,7 +1,7 @@
-import socket
+import socket , pickle
 import keyConfigs
  
-port=int(input("Enter port number: "))
+port = int(input("Enter port number: "))
 try:
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 except socket.error:
@@ -12,9 +12,9 @@ client_socket.connect((ip,port))
 
 # begin key exchange
 data = client_socket.recv(512)
-recievedKey = int.from_bytes(data,byteorder="big")
+recievedKey = pickle.loads(data)
 privateKey, computedKey = keyConfigs.generateKey()
-client_socket.send(computedKey)
+client_socket.send(pickle.dumps(computedKey))
 finalKey = keyConfigs.computeKey(privateKey, recievedKey)
 print ("The generated key : " , finalKey)
 while 1:
