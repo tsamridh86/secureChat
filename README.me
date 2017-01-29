@@ -1,0 +1,34 @@
+#secureChat
+	secure chatting app using socket programming in python
+
+some pre-requisites in ubuntu :
+(this code needs the pycrypto package to run)
+1. sudo apt-get install python3-dev
+2. sudo apt-get install libpython3.5-dev
+2.5. (optional) dpkg-query -L libpython3.5-dev | grep Python.h
+3. download pycryto-2.6.1.tar.gz from https://pypi.python.org/pypi/pycrypto
+4. unzip the file & enter the new folder that has been created.
+5. sudo python3 setup.py build
+6. sudo python3 setup.py install
+
+
+to run the application:
+open 2 terminal windows in the folder location of the code, say A & B:
+A1. python3 server.py
+A2. (enter the port number as a 4 digit number)
+B1. python3 client.py
+B2. (enter the port number as a 4 digit number)
+B3. (enter the ip address of the target machine, 127.0.0.1 for localhost)
+
+to end the application:
+when it's the turn for terminal B to transmit a msg:
+transmit the message 'bye' to terminate the code.
+
+techinical details:
+coded in python 3.5, this code transmits one message alternatively between client and server.
+server must be initialized in the beginning to a port that is not occupied previously.
+client must be then connected to the same port on the appropiate IP address.
+the communication begins with an execution of Diffie-Heilmen Key exchange algorithm.
+after the shared secret is generated, then the keys are hashed using sha256 digest to generate a 256 bit digest.
+this 256 bit digest is then used to encrypt the conversation between the server & client during the conversation.
+The encryption algorithm used is the AES, advanced encryption system.
